@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+}
+
+.main-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.dashboard-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.dashboard-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1; /* Ensures cards take up equal space */
+}
+
+.activity-list, .program-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-list li, .program-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.count {
+    font-weight: bold;
+    color: #16a085;
+}
+
+.view-details {
+    display: block;
+    text-align: right;
+    margin-top: 10px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.program-list .progress {
+    flex-grow: 1;
+    margin: 0 10px;
+    height: 8px;
+    background-color: #ecf0f1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.program-list .progress-bar {
+    height: 100%;
+    background-color: #27ae60;
+}
+
+.announcement {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ecf0f1;
+    padding: 10px 0;
+}
+
+.announcement h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.view-btn {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.view-btn:hover {
+    background-color: #2980b9;
+}
