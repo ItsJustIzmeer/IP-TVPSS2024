@@ -12,8 +12,7 @@
 	href="<c:url value='/resources/font-awesome-4.7.0/css/font-awesome.min.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/systemStyle.css'/>">
-<link rel="stylesheet"
-	href="<c:url value='/resources/css/style.css'/>">
+<link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>">
 </head>
 <body>
 	<!-- nav bar page-->
@@ -28,22 +27,25 @@
 			<div class="main-container">
 				<!-- start of main content -->
 				<div class="box">
+					<c:if test="${not empty error_msg}">
+						<div class="error_msg"
+							style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px;">
+							${error_msg}</div>
+					</c:if>
+					<c:if test="${not empty success_msg}">
+						<div class="success_msg"
+							style="color: green; padding: 10px; border: 1px solid green; margin-bottom: 15px;">
+							${success_msg}</div>
+					</c:if>
 					<div class="program-container">
 						<div class="toolbar">
 							<div class="toolbar-left">
 								<h2>List of Equipment</h2>
 							</div>
-							<div class="toolbar-right">
-								<a href="createReport" class="btn btn-success">Generate
-									Report</a> <a href="addEquipment"
-									class="btn btn-success-event">+ Add New Equipment</a>
-							</div>
+							<div class="toolbar-right"></div>
 						</div>
 						<div class="toolbar">
 							<div class="toolbar-left">
-								<!-- 							empty -->
-							</div>
-							<div class="toolbar-right">
 								<select class="filter-bar" id="filterDropdown">
 									<option value="all">Show All</option>
 									<option value="Camera">Camera</option>
@@ -54,6 +56,13 @@
 									<option value="Background">Background</option>
 								</select> <input type="text" class="search-bar" id="searchInput"
 									placeholder="Search...">
+							</div>
+							<div class="toolbar-right">
+								<c:if test="${create}">
+									<a
+										href="<%=request.getContextPath() + '/'%>createEquipment;jsessionid=<%=session.getId()%>"
+										class="btn btn-success-event">+ Add New Equipment</a>
+								</c:if>
 							</div>
 						</div>
 						<table class="table table-striped">
@@ -68,71 +77,35 @@
 								</tr>
 							</thead>
 							<tbody id="tableBody">
-								<tr>
-									<td>1</td>
-									<td>#666666</td>
-									<td>Camera</td>
-									<td>Canon</td>
-									<td>3</td>
-									<td><a href="detailEquipment"
-										class="btn btn-primary details-btn">Details</a> <a
-										href="editEquipment" class="btn btn-primary details-btn">Edit</a></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>#888888</td>
-									<td>Phone</td>
-									<td>iPhone</td>
-									<td>4</td>
-									<td><a href="detailEquipment"
-										class="btn btn-primary details-btn">Details</a> <a
-										href="editEquipment" class="btn btn-primary details-btn">Edit</a></td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>#657921</td>
-									<td>Camera</td>
-									<td>Nikon</td>
-									<td>2</td>
-									<td><a href="detailEquipment"
-										class="btn btn-primary details-btn">Details</a> <a
-										href="editEquipment" class="btn btn-primary details-btn">Edit</a></td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>#785923</td>
-									<td>Camera</td>
-									<td>FujiFilm</td>
-									<td>4</td>
-									<td><a href="detailEquipment"
-										class="btn btn-primary details-btn">Details</a> <a
-										href="editEquipment" class="btn btn-primary details-btn">Edit</a></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>#532556</td>
-									<td>Camera</td>
-									<td>Kodak</td>
-									<td>6</td>
-									<td><a href="detailEquipment"
-										class="btn btn-primary details-btn">Details</a> <a
-										href="editEquipment" class="btn btn-primary details-btn">Edit</a></td>
-								</tr>
+								<c:if test="${not empty equipments}">
+									<c:forEach var="equipment" items="${equipments}">
+										<tr>
+											<td>${equipment.equipmentID}</td>
+											<td>${equipment.name}</td>
+											<td>${equipment.brand}</td>
+											<td>${equipment.amount}</td>
+											<td><c:if test="${update}">
+													<a
+														href="<%= request.getContextPath() + '/'%>detailEquipment/${equipment.id}/edit;jsessionid=<%= session.getId() %>"
+														class="details-btn">Edit</a>
+												</c:if> <c:choose>
+													<c:when test="${loginUser.role == 'student'}">
+														<a
+															href="<%= request.getContextPath() + '/'%>detailEquipment/${equipment.id}/view;jsessionid=<%= session.getId() %>"
+															class="details-btn">View</a>
+													</c:when>
+													<c:otherwise></c:otherwise>
+												</c:choose></td>
+										</tr>
+									</c:forEach>
+								</c:if>
+								<c:if test="${empty equipments}">
+									<tr>
+										<td colspan="6" style="text-align: center; color: red;">No
+											equipments found.</td>
+									</tr>
+								</c:if>
 							</tbody>
-							<!-- 							<tbody> -->
-							<%-- 								<c:forEach items="${customers}" var="customer"> --%>
-							<!-- 									<tr> -->
-							<%-- 										<td>${no}</td> --%>
-							<%-- 										<td>${id}</td> --%>
-							<%-- 										<td>${name}</td> --%>
-							<%-- 										<td>${brand}</td> --%>
-							<%-- 										<td>${amount}</td> --%>
-							<!-- 										<td><a -->
-							<%-- 											href="<c:url value='#'/>" --%>
-							<!-- 											class="btn btn-primary details-btn">Details</a> <a -->
-							<!-- 									</tr> -->
-							<%-- 								</c:forEach> --%>
-							<!-- 							</tbody> -->
 						</table>
 					</div>
 				</div>
