@@ -38,13 +38,13 @@
 								<div class="form-category">
 									<h3>Event Details</h3>
 									<div class="form-group">
-										<label for="eventName">Name of Event</label>
+										<label for="name">Name of Event</label>
 										<c:if test="${action}">
-											<input type="text" id="eventName" name="eventName"
+											<input type="text" id="name" name="name"
 												value="${event.name}" required>
 										</c:if>
 										<c:if test="${not action}">
-											<label>${event.name }</label>
+											<label>${event.name}</label>
 										</c:if>
 
 									</div>
@@ -53,27 +53,27 @@
 											<label for="startDate">Start Date</label>
 											<c:if test="${action}">
 												<input type="date" id="startDate" name="startDate"
-													value="${event.startDate}" required>
+													value="${startDate}" required>
 											</c:if>
 												<c:if test="${not action}">
-												<label>${event.startDate }</label>
+												<label>${startDate}</label>
 											</c:if>
 										</div>
 										<div class="form-group">
 											<label for="endDate">End Date</label>
 											<c:if test="${action}">
 												<input type="date" id="endDate" name="endDate"
-													value="${event.endDate}" required>
+													value="${endDate}" required>
 											</c:if>
 												<c:if test="${not action}">
-												<label>${event.endDate }</label>
+												<label>${endDate}</label>
 											</c:if>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="eventTime">Time of Event</label>
+										<label for="time">Time of Event</label>
 										<c:if test="${action}">
-											<input type="text" id="eventTime" name="eventTime"
+											<input type="text" id="time" name="time"
 												value="${event.time}" required>
 										</c:if>
 											<c:if test="${not action}">

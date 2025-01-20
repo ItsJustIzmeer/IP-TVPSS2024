@@ -128,11 +128,11 @@
                                     <label>Participant Limit</label>
                                     <div class="radio-group">
                                         <label>
-                                            <input type="radio" name="participantType" value="LIMIT" required> Limit
+                                            <input type="radio" name="participantType" value="limit" onclick=" $('#participantLimit').prop('disabled', false);" required> Limit
                                         </label>
                                         <input type="number" id="participantLimit" name="participantLimit" placeholder="Enter limit" style="width:50%" disabled>
                                         <label>
-                                            <input type="radio" name="participantType" value="OPEN" required> Open
+                                            <input type="radio" name="participantType" value="open" value="limit" onclick="$('#participantLimit').prop('disabled', true);" required> Open
                                         </label>
                                     </div>
                                 </div>
@@ -144,11 +144,11 @@
                                 <div class="form-group">
                                     <div class="radio-group">
                                         <label>
-                                            <input type="radio" name="eventType" value="PHYSICAL" required> Physical
+                                            <input type="radio" name="eventType" value="physical" required> Physical
                                         </label>
                                         <input type="text" id="eventLocation" name="eventLocation" placeholder="Enter location" disabled>
                                         <label>
-                                            <input type="radio" name="eventType" value="VIRTUAL" required> Virtual
+                                            <input type="radio" name="eventType" value="virtual" required> Virtual
                                         </label>
                                         <input type="text" id="eventPlatform" name="eventPlatform" placeholder="Enter platform" disabled>
                                     </div>
@@ -166,7 +166,7 @@
                             <!-- Form Buttons -->
                             <div class="form-buttons">
                                 <button type="submit" class="btn btn-success">Save</button>
-                                <a href="Event" id="cancelbtn" class="btn btn-secondary">Cancel</a>
+                                <a href="<%=request.getContextPath()%>/Event;jsessionid=<%=session.getId()%>" id="cancelbtn" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
                     </div>
@@ -180,7 +180,7 @@
         $(document).ready(function () {
             // Enable or disable participant limit
             $('input[name="participantType"]').change(function () {
-                if ($(this).val() === 'LIMIT') {
+                if ($(this).val() === 'limit') {
                     $('#participantLimit').prop('disabled', false);
                 } else {
                     $('#participantLimit').prop('disabled', true);
@@ -189,7 +189,7 @@
 
             // Enable or disable location or platform
             $('input[name="eventType"]').change(function () {
-                if ($(this).val() === 'PHYSICAL') {
+                if ($(this).val() === 'physical') {
                     $('#eventLocation').prop('disabled', false);
                     $('#eventPlatform').prop('disabled', true);
                 } else {

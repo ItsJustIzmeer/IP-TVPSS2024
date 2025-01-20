@@ -1,7 +1,10 @@
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\config\HibernateConfig.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\controller\UserController.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\dao\UserDAO.java
+C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\entity\Event.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\config\WebConfig.java
+C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\dao\EventDAO.java
+C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\controller\EventController.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\controller\PageController.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\dto\UserPagePermissionDTO.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\dao\SchoolDAO.java

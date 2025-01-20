@@ -88,7 +88,7 @@ public class EventController {
 			        throw new RuntimeException("Invalid participant type: " + participantTypeParam, e);
 			    }
 			}
-			event.setParticipantLimit(Integer.parseInt(request.getParameter("participantLimit")));
+			event.setParticipantLimit(parseIntOrZero(request.getParameter("participantLimit")));
 			String eventType = request.getParameter("eventType");
 			if (eventType != null) {
 			    try {
@@ -166,7 +166,7 @@ public class EventController {
 			        throw new RuntimeException("Invalid participant type: " + participantTypeParam, e);
 			    }
 			}
-			event1.setParticipantLimit(Integer.parseInt(request.getParameter("participantLimit")));
+			event1.setParticipantLimit(parseIntOrZero(request.getParameter("participantLimit")));
 			String eventType = request.getParameter("eventType");
 			if (eventType != null) {
 			    try {
