@@ -24,8 +24,8 @@
 			</li>
 			<li>
 				<div class="left">
-					<span class="name">${sessionScope.user.username }</span> 
-					<span class="role">${sessionScope.user.role }</span>
+					<span class="name">${loginUser.name}</span> 
+					<span class="role">${loginUser.role}</span>
 				</div>
 				<div class="right">
 					<div class="profile-picture circular">

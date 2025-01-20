@@ -10,4 +10,6 @@ import com.entity.Page;
 
 public interface PageDAO extends JpaRepository<Page, Integer> {
 
+	Page findByTitle(String title);
+
 }

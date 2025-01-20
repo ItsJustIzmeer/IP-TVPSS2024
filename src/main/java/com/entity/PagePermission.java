@@ -35,9 +35,10 @@ public class PagePermission {
     
     public PagePermission() {}
 
-	public PagePermission(int pageId, int userId, boolean readPermission, boolean createPermission,
+	public PagePermission(int id,int pageId, int userId, boolean readPermission, boolean createPermission,
 			boolean updatePermission, boolean deletePermission) {
 		super();
+		this.id = id;
 		this.pageId = pageId;
 		this.userId = userId;
 		this.readPermission = readPermission;

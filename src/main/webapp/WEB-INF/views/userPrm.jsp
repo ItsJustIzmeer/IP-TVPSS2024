@@ -159,8 +159,8 @@ hr {
 								<tr>
 									<td>Username</td>
 									<td>:</td>
-									<td><input type="text" name="username" id="username"
-										value="${username != null ? username : ''}" /></td>
+									<td><input type="text" name="name" id="name"
+										value="${name != null ? name : ''}" /></td>
 								</tr>
 								<tr>
 									<td>Email</td>
@@ -188,21 +188,19 @@ hr {
 						<tbody>
 							<c:if test="${not empty userList}">
 								<c:forEach var="user" items="${userList}">
-									<tr id="row_${user.id}">
+									<tr id="row_${user.userId}">
 										<td><c:if test="${update}">
 												<button class="edit_button"
-													onclick="editUser('${user.id}');">
+													onclick="editUser('${user.userId}');">
 													<i class="fa fa-pencil"></i>
 												</button>
 											</c:if>
-										<td>${user.username}</td>
-										<td>${user.email}</td>
-										<td>${user.role}</td>
+										<td>${user.userName}</td>
+										<td>${user.userEmail}</td>
+										<td>${user.userRole}</td>
 										<td><c:choose>
-												<c:when test="${user.status == 'A'}">Active</c:when>
-												<c:when test="${user.status == 'B'}">Banned</c:when>
-												<c:when test="${user.status == 'D'}">Deleted</c:when>
-												<c:otherwise>Unknown</c:otherwise>
+												<c:when test="${user.userStatus == 'active'}">Active</c:when>
+												<c:when test="${user.userStatus == 'banned'}">Banned</c:when>
 											</c:choose></td>
 									</tr>
 								</c:forEach>

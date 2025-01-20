@@ -35,7 +35,7 @@
 			<form method="post" action="<c:url value='/user/sign-up' />">
 				<h1>Create Account</h1>
 				<span>Use your email for registration</span> <input type="text"
-					placeholder="Name" name="username" required /> <input type="email"
+					placeholder="Name" name="name" required /> <input type="email"
 					placeholder="Email" name="email" required /> <input
 					type="password" placeholder="Password" name="password" required />
 				<button>Sign Up</button>
@@ -45,7 +45,7 @@
 		<div class="form-container sign-in-container">
 			<form method="post" action="<c:url value='/user/sign-in' />">
 				<h1>Sign in</h1>
-				<input type="text" placeholder="Username" name="username" required />
+				<input type="text" placeholder="Username" name="name" required />
 				<input type="password" placeholder="Password" name="password"
 					required />
 				<div class="line_bar" style="width: 100%">

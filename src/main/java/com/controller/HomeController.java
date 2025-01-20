@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -29,12 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.entity.Page;
 import com.entity.PagePermission;
 import com.entity.User;
 import com.entity.School;
+import com.dao.PageDAO;
 import com.dao.PagePermissionDAO;
 import com.dao.UserDAO;
 import com.dao.SchoolDAO;
+import com.dto.PagePermissionDTO;
 import com.dto.UserPagePermissionDTO;
 import com.dto.UserWithSchoolDTO;
 
@@ -50,6 +54,9 @@ public class HomeController {
 
 	@Autowired
 	private SchoolDAO schoolDAO;
+
+	@Autowired
+	private PageDAO pageDAO;
 
 	@GetMapping("/")
 	public ModelAndView login() {
@@ -93,7 +100,7 @@ public class HomeController {
 			}
 		}
 		ModelAndView modelAndView = new ModelAndView(view, model);
-		
+
 		return modelAndView;
 	}
 
@@ -153,19 +160,62 @@ public class HomeController {
 				user.setSchoolId(schoolId);
 				userDAO.save(user);
 
-				// Update the school if necessary
-				if (!"DistrictOfficer".equalsIgnoreCase(role)) {
-					Optional<School> schoolOpt = schoolDAO.findById(schoolId);
+				Optional<School> schoolOpt = schoolDAO.findById(schoolId);
+				switch (role) {
+				case "DistrictOfficer":
+					List<PagePermission> pp = new ArrayList<>();
+
+					pp.add(new PagePermission(0, 1, user.getId(), true, false, false, false));
+					pp.add(new PagePermission(0, 3, user.getId(), true, false, true, false));
+					pp.add(new PagePermission(0, 6, user.getId(), true, false, true, false));
+					pp.add(new PagePermission(0, 13, user.getId(), true, false, true, false));
+					pp.add(new PagePermission(0, 5, user.getId(), true, false, true, false));
+					pp.add(new PagePermission(0, 14, user.getId(), true, true, true, true));
+					pp.add(new PagePermission(0, 4, user.getId(), true, true, true, true));
+
+					pagePermissionDAO.saveAll(pp);
+					break;
+				case "SchoolAdmin":
+					List<PagePermission> pp1 = new ArrayList<>();
+
+					pp1.add(new PagePermission(0, 1, user.getId(), true, false, false, false));
+					pp1.add(new PagePermission(0, 2, user.getId(), true, false, true, false));
+					pp1.add(new PagePermission(0, 5, user.getId(), true, false, true, false));
+					pp1.add(new PagePermission(0, 7, user.getId(), true, false, true, false));
+					pp1.add(new PagePermission(0, 8, user.getId(), true, true, true, true));
+					pp1.add(new PagePermission(0, 4, user.getId(), true, true, true, true));
+					pp1.add(new PagePermission(0, 9, user.getId(), true, false, true, true));
+					pp1.add(new PagePermission(0, 11, user.getId(), true, true, false, false));
+					pp1.add(new PagePermission(0, 12, user.getId(), true, true, false, false));
+
+					pagePermissionDAO.saveAll(pp1);
 					if (schoolOpt.isPresent()) {
 						School school = schoolOpt.get();
-						// Update total_students or total_teachers based on the role
-						if ("Student".equalsIgnoreCase(role)) {
-							school.setTotalStudent(school.getTotalStudent() + 1);
-						} else if ("SchoolAdmin".equalsIgnoreCase(role)) {
-							school.setTotalTeacher(school.getTotalTeacher() + 1);
-						}
+						school.setTotalTeacher(school.getTotalTeacher() + 1);
 						schoolDAO.save(school);
+					} else {
+						model.addAttribute("error_msg", "Error on updating school info. School not found.");
 					}
+					break;
+				case "Student":
+					List<PagePermission> pp11 = new ArrayList<>();
+
+					pp11.add(new PagePermission(0, 1, user.getId(), true, false, false, false));
+					pp11.add(new PagePermission(0, 2, user.getId(), true, false, false, false));
+					pp11.add(new PagePermission(0, 8, user.getId(), true, false, false, false));
+
+					pagePermissionDAO.saveAll(pp11);
+					if (schoolOpt.isPresent()) {
+						School school = schoolOpt.get();
+						school.setTotalTeacher(school.getTotalTeacher() + 1);
+						schoolDAO.save(school);
+					} else {
+						model.addAttribute("error_msg", "Error on updating school info. School not found.");
+					}
+					break;
+				default:
+					model.addAttribute("error_msg", "Error on generating genaral permission. Role not defined.");
+					break;
 				}
 				model.addAttribute("success_msg", "User created successfully!");
 			} catch (Exception e) {
@@ -225,13 +275,22 @@ public class HomeController {
 			break;
 		case "update":
 			try {
-			    User updatedUser = new User(id, name, email, password, status, role, phoneNumber, address, district, state, schoolId);
-			    userDAO.save(updatedUser);
-			    model.addAttribute("success_msg", "Changes updated into database successfully.");
-			}  catch (Exception e) {
-			    e.printStackTrace();  // Print the stack trace to the console or log it
-			    model.addAttribute("error_msg", "Failed to update user information. Please try again./n"+ e.getMessage());
-
+				Optional<User> existingUserOpt = userDAO.findById(id);
+				if (existingUserOpt.isPresent()) {
+					User existingUser = existingUserOpt.get();
+					String updatedPassword = (password == null || password.isEmpty()) ? existingUser.getPassword()
+							: password;
+					User updatedUser = new User(id, name, email, updatedPassword, status, role, phoneNumber, address,
+							district, state, schoolId);
+					userDAO.save(updatedUser);
+					model.addAttribute("success_msg", "Changes updated into database successfully.");
+				} else {
+					model.addAttribute("error_msg", "User not found. Update failed.");
+				}
+			} catch (Exception e) {
+				e.printStackTrace(); // Print the stack trace to the console or log it
+				model.addAttribute("error_msg",
+						"Failed to update user information. Please try again./n" + e.getMessage());
 			}
 
 			if (loggedInUser.getRole().equals("DistrictOfficer")) {
@@ -242,6 +301,8 @@ public class HomeController {
 			break;
 		case "delete":
 			if (userDAO.existsById(id)) {
+				pagePermissionDAO.deleteAllByUserId(id);
+
 				Optional<School> schoolOpt = schoolDAO.findById(schoolId);
 				if (schoolOpt.isPresent()) {
 					School school = schoolOpt.get();
@@ -277,8 +338,156 @@ public class HomeController {
 		ModelMap model = new ModelMap();
 		model = auth(request, model, view);
 
+		HttpSession session = request.getSession(false);
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
+		if (loggedInUser.getRole().equals("DistrictOfficer")) {
+			model.addAttribute("userList", userDAO.findUsersWithSchoolDetails());
+		} else if (loggedInUser.getRole().equals("SchoolAdmin")) {
+			model.addAttribute("userList", userDAO.findUsersWithSchoolDetailsBySchoolId(loggedInUser.getSchoolId()));
+		}
+
 		ModelAndView modelAndView = new ModelAndView(view, model);
 		return modelAndView;
+	}
+
+	@Transactional
+	@PostMapping("/userPrm/{action}")
+	public ModelAndView userPermissionAction(@PathVariable String action, HttpServletRequest request,
+			@ModelAttribute("model") ModelMap model) throws IOException {
+		String view = "userPrm";
+		model = auth(request, model, view);
+
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		model.addAttribute("success_msg", "");
+		model.addAttribute("error_msg", "");
+
+		HttpSession session = request.getSession(false);
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
+		switch (action) {
+		case "search":
+			if (name != null)
+				model.addAttribute("name", name);
+			if (email != null)
+				model.addAttribute("email", email);
+
+			if (loggedInUser.getRole().equals("DistrictOfficer")) {
+				List<UserWithSchoolDTO> userList = userDAO.findUsersWithSchoolDetails().stream()
+						.filter(user -> (name == null || name.isEmpty() || user.getUserName().contains(name)))
+						.filter(user -> (email == null || email.isEmpty() || user.getUserEmail().contains(email)))
+						.collect(Collectors.toList());
+
+				model.addAttribute("userList", userList);
+			} else if (loggedInUser.getRole().equals("SchoolAdmin")) {
+				List<UserWithSchoolDTO> userList1 = userDAO
+						.findUsersWithSchoolDetailsBySchoolId(loggedInUser.getSchoolId()).stream()
+						.filter(user -> (name == null || name.isEmpty() || user.getUserName().contains(name)))
+						.filter(user -> (email == null || email.isEmpty() || user.getUserEmail().contains(email)))
+						.collect(Collectors.toList());
+				model.addAttribute("userList", userList1);
+			}
+			break;
+		case "get":
+			try {
+				int userId = Integer.parseInt(request.getParameter("id"));
+
+				User user = userDAO.getById(userId);
+				List<PagePermissionDTO> pagePermissions = pagePermissionDAO.findAllPagesWithPermissionsByUserId(userId);
+
+				model.addAttribute("name", user.getName());
+				model.addAttribute("email", user.getEmail());
+				model.addAttribute("userId", userId);
+
+				// Generate HTML table rows
+				StringBuilder htmlTable = new StringBuilder();
+				for (PagePermissionDTO permission : pagePermissions) {
+					htmlTable.append("<tr>").append("<td>").append(permission.getTitle()).append("</td>")
+							.append("<td><input type='checkbox' name='read'")
+							.append(permission.getReadPermission() != null && permission.getReadPermission()
+									? " checked"
+									: "")
+							.append("></td>").append("<td><input type='checkbox' name='create'")
+							.append(permission.getCreatePermission() != null && permission.getCreatePermission()
+									? " checked"
+									: "")
+							.append("></td>").append("<td><input type='checkbox' name='update'")
+							.append(permission.getUpdatePermission() != null && permission.getUpdatePermission()
+									? " checked"
+									: "")
+							.append("></td>").append("<td><input type='checkbox' name='delete'")
+							.append(permission.getDeletePermission() != null && permission.getDeletePermission()
+									? " checked"
+									: "")
+							.append("></td>").append("</tr>");
+				}
+				model.addAttribute("tableRows", htmlTable.toString());
+				if ("DistrictOfficer".equals(loggedInUser.getRole())) {
+					List<UserWithSchoolDTO> userList = userDAO.findUsersWithSchoolDetails();
+					model.addAttribute("userList", userList);
+				} else if ("SchoolAdmin".equals(loggedInUser.getRole())) {
+					List<UserWithSchoolDTO> userList = userDAO
+							.findUsersWithSchoolDetailsBySchoolId(loggedInUser.getSchoolId());
+					model.addAttribute("userList", userList);
+				}
+
+			} catch (NumberFormatException e) {
+				model.addAttribute("error_msg", "Invalid user ID.");
+
+			} catch (Exception e) {
+				model.addAttribute("error_msg", "An unexpected error occurred: " + e.getMessage());
+
+			}
+			break;
+		case "update":
+			try {
+				int uid =Integer.parseInt(request.getParameter("id"));
+
+				pagePermissionDAO.deleteAllByUserId(uid);
+				Enumeration<String> parameterNames = request.getParameterNames();
+				while (parameterNames.hasMoreElements()) {
+					String paramName = parameterNames.nextElement();
+
+					// Check if the parameter name contains '_read', '_create', '_update', or
+					// '_delete'
+					if (paramName.endsWith("_read")) {
+						String pageName = paramName.replace("_read", "");
+						Boolean readValue = Boolean.parseBoolean(request.getParameter(paramName));
+						Boolean createValue = Boolean.parseBoolean(request.getParameter(pageName + "_create"));
+						Boolean updateValue = Boolean.parseBoolean(request.getParameter(pageName + "_update"));
+						Boolean deleteValue = Boolean.parseBoolean(request.getParameter(pageName + "_delete"));
+
+						Page pg = pageDAO.findByTitle(pageName);
+						pagePermissionDAO.save(new PagePermission(0,pg.getId(),uid,readValue,createValue,updateValue,deleteValue));
+					}
+				}
+				if ("DistrictOfficer".equals(loggedInUser.getRole())) {
+					List<UserWithSchoolDTO> userList = userDAO.findUsersWithSchoolDetails();
+					model.addAttribute("userList", userList);
+				} else if ("SchoolAdmin".equals(loggedInUser.getRole())) {
+					List<UserWithSchoolDTO> userList = userDAO
+							.findUsersWithSchoolDetailsBySchoolId(loggedInUser.getSchoolId());
+					model.addAttribute("userList", userList);
+				}
+				model.addAttribute("success_msg", "Data updated successfully.");
+			} catch (NumberFormatException e) {
+				model.addAttribute("error_msg", "Invalid user ID.");
+
+			} catch (Exception e) {
+				model.addAttribute("error_msg", "An unexpected error occurred: " + e.getMessage());
+			}
+			break;
+		default:
+			if (loggedInUser.getRole().equals("DistrictOfficer")) {
+				List<UserWithSchoolDTO> userList = userDAO.findUsersWithSchoolDetails();
+				model.addAttribute("userList", userList);
+			} else if (loggedInUser.getRole().equals("SchoolAdmin")) {
+				List<UserWithSchoolDTO> userList1 = userDAO
+						.findUsersWithSchoolDetailsBySchoolId(loggedInUser.getSchoolId());
+				model.addAttribute("userList", userList1);
+			}
+			break;
+		}
+		return new ModelAndView(view, model);
 	}
 
 	@GetMapping("/schoolMng")

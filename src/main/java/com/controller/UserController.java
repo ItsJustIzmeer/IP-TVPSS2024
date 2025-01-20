@@ -79,7 +79,7 @@ public class UserController {
         
         Optional<User> userOpt = userDAO.findByName(name);
 
-        if (userOpt.isPresent() && userOpt.get().getPassword().equals(password)) {
+        if (userOpt.isPresent() && userOpt.get().getPassword().equals(password) && userOpt.get().getStatus().equals("active")) {
             User user = userOpt.get();
             session.setAttribute("loggedInUser", user);
             redirectAttributes.addFlashAttribute("success_msg", "Sign-in successful! Welcome " + user.getName() + ".");

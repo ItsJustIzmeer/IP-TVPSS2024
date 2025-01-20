@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dto.PagePermissionDTO;
 import com.dto.UserPagePermissionDTO;
 import com.entity.PagePermission;
 
@@ -30,4 +31,11 @@ public interface PagePermissionDAO extends JpaRepository<PagePermission, Integer
 			+ "FROM PagePermission pp " + "JOIN Page p ON pp.pageId = p.id "
 			+ "WHERE pp.userId = :userId AND p.filename = :filename")
 	List<Object[]> findPermissionsByUserIdAndPageFilename(Integer userId, String filename);
+
+	void deleteAllByUserId(int id);
+
+	@Query("SELECT new com.dto.PagePermissionDTO(p.id, p.title, "
+			+ "pp.readPermission, pp.createPermission, pp.updatePermission, pp.deletePermission) " + "FROM Page p "
+			+ "LEFT JOIN FETCH PagePermission pp ON pp.pageId = p.id AND pp.userId = :userId")
+	List<PagePermissionDTO> findAllPagesWithPermissionsByUserId(Integer userId);
 }

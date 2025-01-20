@@ -170,8 +170,8 @@ hr {
 											<tr>
 												<td>Username</td>
 												<td>:</td>
-												<td><input type="text" name="username" id="username"
-													value="${username != null ? username : ''}" /></td>
+												<td><input type="text" name="name" id="name"
+													value="${name != null ? name : ''}" /></td>
 											</tr>
 											<tr>
 												<td>Email</td>
@@ -194,8 +194,9 @@ hr {
 											<tr>
 												<td>Phone Number</td>
 												<td>:</td>
-												<td><input type="text" name="phoneNum" id="phoneNum"
-													value="${phoneNum != null ? phoneNum : ''}" /></td>
+												<td><input type="text" name="phoneNumber"
+													id="phoneNumber"
+													value="${phoneNumber != null ? phoneNumber : ''}" /></td>
 											</tr>
 											<tr>
 												<td>Address</td>
@@ -225,8 +226,8 @@ hr {
 													<td>:</td>
 													<td><select name="status" id="status">
 															<option value="">All</option>
-															<option value="A" ${status == 'A' ? 'selected' : ''}>Active</option>
-															<option value="B" ${status == 'B' ? 'selected' : ''}>Banned</option>
+															<option value="active" ${status == 'active' ? 'selected' : ''}>Active</option>
+															<option value="banned" ${status == 'banned' ? 'selected' : ''}>Banned</option>
 													</select></td>
 												</tr>
 												<tr>
@@ -234,35 +235,31 @@ hr {
 													<td>:</td>
 													<td><select name="role" id="role">
 															<option value="">All</option>
-															<option value="student"
-																${role == 'student' ? 'selected' : ''}>Student</option>
-															<option value="school admin"
-																${role == 'school admin' ? 'selected' : ''}>School
+															<option value="Student"
+																${role == 'Student' ? 'selected' : ''}>Student</option>
+															<option value="SchoolAdmin"
+																${role == 'SchoolAdmin' ? 'selected' : ''}>School
 																Admin</option>
-															<c:if
-																test="${sessionScope.user.role == 'district officer'}">
-																<option value="district officer"
-																	${role == 'district officer' ? 'selected' : ''}>District</option>
+															<c:if test="${loginUser.role == 'DistrictOfficer'}">
+																<option value="DistrictOfficer"
+																	${role == 'DistrictOfficer' ? 'selected' : ''}>District</option>
 															</c:if>
 													</select></td>
 												</tr>
 												<tr>
 													<td>School</td>
 													<td>:</td>
-													<td><select name="school" id="school">
+													<td><select name="schoolId" id="schoolId">
 															<c:choose>
-																<c:when
-																	test="${sessionScope.user.role == 'district officer'}">
-																	<option value="">Select school</option>
-																	<c:forEach var="schoolv" items="${schools}">
-																		<option value="${schoolv.code}"
-																			${school == schoolv.code ? 'selected' : ''}>${schoolv.name}</option>
+																<c:when test="${loginUser.role == 'DistrictOfficer'}">
+																	<option value="0">Select school</option>
+																	<c:forEach var="schoolv" items="${schoolList}">
+																		<option value="${schoolv.id}"
+																			${school == schoolv.id ? 'selected' : ''}>${schoolv.name}</option>
 																	</c:forEach>
 																</c:when>
-																<c:when
-																	test="${sessionScope.user.role == 'school admin'}">
-																	<option value="${sessionScope.user.school.code}"
-																		selected>${sessionScope.user.school.name}</option>
+																<c:when test="${loginUser.role == 'SchoolAdmin'}">
+																	<option value="${loginSchool.id}" selected>${loginSchool.name}</option>
 																</c:when>
 																<c:otherwise>
 																	<option value="">Access not permitted.</option>
@@ -293,26 +290,25 @@ hr {
 						<tbody>
 							<c:if test="${not empty userList}">
 								<c:forEach var="user" items="${userList}">
-									<tr id="row_${user.id}">
+									<tr>
 										<td><c:if test="${update}">
-												<button class="edit_button" id="edit_button_${user.id }"
-													onclick="editUser('${user.id}', '${user.username}', '${user.email}', '${user.status}', '${user.role}', '${user.phoneNum}', '${user.address}', '${user.district}', '${user.state}', '${user.school.code}')">
+												<button class="edit_button" id="edit_button_${user.userId}"
+													onclick="editUser(${user.userId}, '${user.userName}', '${user.userEmail}', '${user.userStatus}', '${user.userRole}', '${user.userPhoneNumber}', '${user.userAddress}', '${user.userDistrict}', '${user.userState}', '${user.schoolId}')">
 													<i class="fa fa-pencil"></i>
 												</button>
-											</c:if> <c:if test="${delete && sessionScope.user.id ne user.id}">
-												<button class="delete_button" id="delete_${user.id}"
-													onclick="deleteUser('${user.id}');">
+											</c:if> <c:if test="${delete && loginUser.id ne user.userId}">
+												<button class="delete_button" id="delete"
+													onclick="deleteUser(${user.userId},${user.schoolId},'${user.userRole}');">
 													<i class="fa fa-trash"></i>
 												</button>
 											</c:if></td>
-										<td>${user.username}</td>
-										<td>${user.email}</td>
-										<td>${user.school.name }</td>
-										<td>${user.role}</td>
+										<td>${user.userName}</td>
+										<td>${user.userEmail}</td>
+										<td>${user.schoolName}</td>
+										<td>${user.userRole}</td>
 										<td><c:choose>
-												<c:when test="${user.status == 'A'}">Active</c:when>
-												<c:when test="${user.status == 'B'}">Banned</c:when>
-												<c:when test="${user.status == 'D'}">Deleted</c:when>
+												<c:when test="${user.userStatus == 'active'}">Active</c:when>
+												<c:when test="${user.userStatus == 'banned'}">Banned</c:when>
 												<c:otherwise>Unknown</c:otherwise>
 											</c:choose></td>
 									</tr>
@@ -386,10 +382,10 @@ hr {
 	            }
 	            if (statusSelect){
 	            	 statusSelect.disabled = false; 
-	                 statusSelect.value = 'A';  
+	                 statusSelect.value = "active";  
 	                 // only status A is enabled
 	                 for (let option of statusSelect.options) {
-	                     if (option.value !== 'A') {
+	                     if (option.value !== "active") {
 	                         option.disabled = true;
 	                     }
 	                 }
@@ -438,6 +434,16 @@ hr {
 		                    input.value = '';  // Clear input values
 		                });
 		            }
+	        		if (statusSelect){
+		            	 statusSelect.disabled = false; 
+		                 statusSelect.value = "active";  
+		                 // only status A is enabled
+		                 for (let option of statusSelect.options) {
+		                     if (option.value !== "active") {
+		                         option.disabled = true;
+		                     }
+		                 }
+		            }
 	        	}
 	        	mode = currMode;
 	        }
@@ -445,21 +451,23 @@ hr {
 		}
 		
 		function validateForm() {
-	        var username = document.getElementById('username').value;
+	        var name = document.getElementById('name').value;
 	        var email = document.getElementById('email').value;
 	        var password = document.getElementById('in_password').value;
 	        var cPassword = document.getElementById('in_c_password').value;
 	        var status = document.getElementById('status').value;
 	        var role = document.getElementById('role').value;
-	        var phoneNum = document.getElementById('phoneNum').value;
+	        var phoneNumber = document.getElementById('phoneNumber').value;
 	        var address = document.getElementById('address').value;
 	        var district = document.getElementById('district').value;
 	        var state = document.getElementById('state').value;
-	        var school = document.getElementById('school').value;
+	        var schoolId = document.getElementById('schoolId').value;
+	        const roleSelect = document.getElementById('role');
 	        var errorMessage = "";
 
+	        
 	        // validation
-	        if (username === "") {
+	        if (name === "") {
 	            errorMessage += "Username is required.\n";
 	        }
 	        if (email === "") {
@@ -480,7 +488,7 @@ hr {
 	        if (role === ""){
 	        	errorMessage += "Role cannot be empty.\n";
 	        }
-	        if (phoneNum === ""){
+	        if (phoneNumber === ""){
 	        	errorMessage += "Phone Number cannot be empty.\n";
 	        }
 	        if (address === ""){
@@ -492,7 +500,7 @@ hr {
 	        if (state === ""){
 	        	errorMessage += "State cannot be empty.\n";
 	        }
-	        if (school === ""){
+	        if (schoolId === 0){
 	        	if(role != "district officer"){
 	        	errorMessage += "School cannot be empty.\n";
 	        	}
@@ -503,6 +511,7 @@ hr {
 	            alert(errorMessage);
 	            return false;
 	        }else{
+	        	roleSelect.disabled = false; 
 	        	document.getElementById('formUser').submit();
 	        }
 	    }
@@ -513,18 +522,18 @@ hr {
 	        return re.test(email);
 	    }
 
-		function editUser(userId, username, email, status, role,phoneNum,address,district,state,school) {
+		function editUser(userId, name, email, status, role,phoneNumber,address,district,state,schoolId) {
 			changeMode('updatemode');
 		    // Populate the form fields with the user data
-		    document.getElementById('username').value = username;
+		    document.getElementById('name').value = name;
 		    document.getElementById('email').value = email;
 		    document.getElementById('status').value = status;
 		    document.getElementById('role').value = role;
-		    document.getElementById('phoneNum').value = phoneNum;
+		    document.getElementById('phoneNumber').value = phoneNumber;
 		    document.getElementById('address').value = address;
 		    document.getElementById('district').value = district;
 		    document.getElementById('state').value = state;
-		    document.getElementById('school').value = school;
+		    document.getElementById('schoolId').value = schoolId;
 
 		    document.getElementById('in_password').value = ""; 
 		    document.getElementById('in_c_password').value = ""; 
@@ -542,7 +551,7 @@ hr {
 		    userIdField.value = userId;
 		}
 		
-		function deleteUser(userId=null){
+		function deleteUser(userId=null,schoolId=null,role=null){
 			
 			const confirmDelete = window.confirm("Are you sure you want to delete this user?");
 		    if (!confirmDelete) {
@@ -566,6 +575,7 @@ hr {
 		    	userIdField.value = userId;
 		    	}
 		    }
+		    document.getElementById('schoolId').value = schoolId;
 			if (formUser) formUser.submit();
 		}
 		// Initialize when refresh/first load
