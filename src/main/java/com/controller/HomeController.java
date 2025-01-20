@@ -34,6 +34,7 @@ import com.entity.Page;
 import com.entity.PagePermission;
 import com.entity.User;
 import com.entity.School;
+import com.dao.EventDAO;
 import com.dao.PageDAO;
 import com.dao.PagePermissionDAO;
 import com.dao.UserDAO;
@@ -504,17 +505,6 @@ public class HomeController {
 	@GetMapping("/EventApplication/{eventId}")
 	public ModelAndView eventApplication(@PathVariable String eventId, HttpServletRequest request) {
 		String view = "EventApplication";
-		ModelMap model = new ModelMap();
-		model = auth(request, model, view);
-
-		ModelAndView modelAndView = new ModelAndView(view, model);
-
-		return modelAndView;
-	}
-
-	@GetMapping("/Event")
-	public ModelAndView event(HttpServletRequest request) {
-		String view = "Event";
 		ModelMap model = new ModelMap();
 		model = auth(request, model, view);
 
