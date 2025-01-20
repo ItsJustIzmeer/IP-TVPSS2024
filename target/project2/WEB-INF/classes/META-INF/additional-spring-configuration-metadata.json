@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "spring.jpa.entity.scan.packages",
+  "type": "java.lang.String",
+  "description": "A description for 'spring.jpa.entity.scan.packages'"
+}]}

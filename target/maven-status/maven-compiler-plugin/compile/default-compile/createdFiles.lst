@@ -1,0 +1,14 @@
+com\config\WebConfig.class
+com\dao\PageDAO.class
+com\dao\UserDAO.class
+com\config\JpaConfig.class
+com\controller\SchoolController.class
+com\entity\Page.class
+com\entity\School.class
+com\controller\UserController.class
+com\dao\SchoolDAO.class
+com\config\HibernateConfig.class
+com\controller\PageController.class
+com\entity\User.class
+com\controller\HomeController.class
+com\Project2Application.class
