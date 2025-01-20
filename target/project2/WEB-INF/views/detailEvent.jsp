@@ -55,7 +55,11 @@
 												<input type="date" id="startDate" name="startDate"
 													value="${startDate}" required>
 											</c:if>
+<<<<<<< HEAD
 												<c:if test="${not action}">
+=======
+											<c:if test="${not action}">
+>>>>>>> ad15b14cf34dc35c0433cefe4a23f7690af901fb
 												<label>${startDate}</label>
 											</c:if>
 										</div>
@@ -65,7 +69,11 @@
 												<input type="date" id="endDate" name="endDate"
 													value="${endDate}" required>
 											</c:if>
+<<<<<<< HEAD
 												<c:if test="${not action}">
+=======
+											<c:if test="${not action}">
+>>>>>>> ad15b14cf34dc35c0433cefe4a23f7690af901fb
 												<label>${endDate}</label>
 											</c:if>
 										</div>
@@ -76,7 +84,7 @@
 											<input type="text" id="time" name="time"
 												value="${event.time}" required>
 										</c:if>
-											<c:if test="${not action}">
+										<c:if test="${not action}">
 											<label>${event.time }</label>
 										</c:if>
 									</div>
@@ -87,7 +95,7 @@
 												<input type="text" id="organizer" name="organizer"
 													value="${event.organizer}" required>
 											</c:if>
-												<c:if test="${not action}">
+											<c:if test="${not action}">
 												<label>${event.organizer }</label>
 											</c:if>
 										</div>
@@ -97,7 +105,7 @@
 												<input type="text" id="speaker" name="speaker"
 													value="${event.speaker}" required>
 											</c:if>
-												<c:if test="${not action}">
+											<c:if test="${not action}">
 												<label>${event.speaker }</label>
 											</c:if>
 										</div>
@@ -113,7 +121,7 @@
 											<input type="email" id="email" name="email"
 												value="${event.email}" required>
 										</c:if>
-											<c:if test="${not action}">
+										<c:if test="${not action}">
 											<label>${event.email }</label>
 										</c:if>
 									</div>
@@ -123,7 +131,7 @@
 											<input type="tel" id="phoneNumber" name="phoneNumber"
 												value="${event.phoneNumber}" required>
 										</c:if>
-											<c:if test="${not action}">
+										<c:if test="${not action}">
 											<label>${event.phoneNumber }</label>
 										</c:if>
 									</div>
@@ -190,7 +198,7 @@
 											<textarea id="eventDescription" name="eventDescription"
 												required>${event.description}</textarea>
 										</c:if>
-											<c:if test="${not action}">
+										<c:if test="${not action}">
 											<label>${event.description }</label>
 										</c:if>
 									</div>
@@ -208,8 +216,8 @@
 									<c:choose>
 										<c:when test="${sessionScope.user.role == 'student'}">
 											<a
-										href="<%=request.getContextPath() + '/'%>EventApplication/${event.id};jsessionid=<%=session.getId()%>"
-										id="cancelbtn" class="btn btn-secondary">Join Event</a>
+												href="<%=request.getContextPath() + '/'%>EventApplication/${event.id};jsessionid=<%=session.getId()%>"
+												id="cancelbtn" class="btn btn-secondary">Join Event</a>
 										</c:when>
 										<c:otherwise>
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\config\HibernateConfig.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\controller\UserController.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\dao\UserDAO.java
@@ -21,3 +22,31 @@ C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\dto\PagePermis
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\controller\SchoolController.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\Project2Application.java
 C:\Spring\sts-4.25.0.RELEASE\workplace\project2\src\main\java\com\config\JpaConfig.java
+=======
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\controller\PageController.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dto\UserPagePermissionDTO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\config\HibernateConfig.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\controller\EquipmentController.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\controller\PagePermissionController.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\entity\Equipment.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\controller\HomeController.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dto\PagePermissionDTO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\entity\PagePermission.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dao\UserDAO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dao\EquipmentDAO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\entity\School.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\Project2Application.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\controller\SchoolController.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dao\SchoolDAO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dao\PageDAO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\config\JpaConfig.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dao\EventDAO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dto\UserWithSchoolDTO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\controller\UserController.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\entity\Page.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\config\WebConfig.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\controller\EventController.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\entity\Event.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\dao\PagePermissionDAO.java
+C:\Spring\workspace-spring-tool-suite-4-4.25.0.RELEASE\IP-TVPSS2024\project2\src\main\java\com\entity\User.java
+>>>>>>> ad15b14cf34dc35c0433cefe4a23f7690af901fb

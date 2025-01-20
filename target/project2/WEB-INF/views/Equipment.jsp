@@ -23,7 +23,7 @@
 
 		<!-- main body -->
 		<div class="main-body" style="width: -webkit-fill-available;">
-			<div class="maintitle">Equipment List</div>
+			<div class="maintitle">Equipment</div>
 			<div class="main-container">
 				<!-- start of main content -->
 				<div class="box">
@@ -68,7 +68,6 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th>No</th>
 									<th>Equipment ID</th>
 									<th>Equipment Name</th>
 									<th>Brand</th>
