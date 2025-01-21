@@ -88,7 +88,7 @@
 														href="<%= request.getContextPath() + '/'%>detailEquipment/${equipment.id}/edit;jsessionid=<%= session.getId() %>"
 														class="details-btn">Edit</a>
 												</c:if> <c:choose>
-													<c:when test="${loginUser.role == 'student'}">
+													<c:when test="${loginUser.role == 'Student'}">
 														<a
 															href="<%= request.getContextPath() + '/'%>detailEquipment/${equipment.id}/view;jsessionid=<%= session.getId() %>"
 															class="details-btn">View</a>

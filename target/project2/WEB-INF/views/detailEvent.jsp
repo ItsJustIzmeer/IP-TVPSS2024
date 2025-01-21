@@ -206,7 +206,7 @@
 											onclick="confirmDelete('${event.id}')">Delete</button>
 									</c:if>
 									<c:choose>
-										<c:when test="${sessionScope.user.role == 'student'}">
+										<c:when test="${loginUser.role == 'Student'}">
 											<a
 												href="<%=request.getContextPath() + '/'%>EventApplication/${event.id};jsessionid=<%=session.getId()%>"
 												id="cancelbtn" class="btn btn-secondary">Join Event</a>
