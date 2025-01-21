@@ -28,7 +28,7 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
 	@Query("SELECT new com.dto.UserWithSchoolDTO(u.id, u.name, u.role, u.status, u.email, u.phoneNumber, u.address,u.district,u.state, s.id, s.name) "
 			+ "FROM User u JOIN School s ON u.schoolId = s.id")
-	List<UserWithSchoolDTO> findUsersWithSchoolDetails();
+	List<UserWithSchoolDTO> findUsersWithSchoolDetails(); 
 
 	@Query("SELECT new com.dto.UserWithSchoolDTO(u.id, u.name, u.role, u.status, u.email, u.phoneNumber, u.address,u.district,u.state, s.id, s.name) "
 			+ "FROM User u JOIN School s ON u.schoolId = s.id WHERE u.schoolId = :schoolId")

@@ -542,6 +542,8 @@ public class HomeController {
 		ModelAndView modelAndView = new ModelAndView(view, model);
 		return modelAndView;
 	}
+	
+	
 
 	@GetMapping("/LevelUpgrade")
 	public ModelAndView levelUpgrade(HttpServletRequest request) {

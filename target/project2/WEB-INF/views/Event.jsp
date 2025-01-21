@@ -84,7 +84,7 @@
 															class="details-btn">Edit</a>
 													</c:if> 
 													<c:choose>
-													<c:when test="${sessionScope.user.role == 'student'}">
+													<c:when test="${loginUser.role == 'student'}">
 														<a
 															href="<%= request.getContextPath() + '/'%>detailEvent/${event.id}/view;jsessionid=<%= session.getId() %>"
 															class="details-btn">View</a>

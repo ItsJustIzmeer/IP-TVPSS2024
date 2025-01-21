@@ -1,194 +1,210 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Create Event</title>
-<link rel="stylesheet"
-	href="<c:url value='/resources/font-awesome-4.7.0/css/font-awesome.min.css'/>">
-<link rel="stylesheet"
-	href="<c:url value='/resources/css/systemStyle.css'/>">
-<link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-</style>
+    <meta charset="UTF-8">
+    <title>Create Event</title>
+    <link rel="stylesheet" href="<c:url value='/resources/font-awesome-4.7.0/css/font-awesome.min.css'/>">
+    <link rel="stylesheet" href="<c:url value='/resources/css/systemStyle.css'/>">
+    <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-category h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, 
+        .form-group textarea {
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .inline-group {
+            display: flex;
+            gap: 15px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        .form-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
-	<!-- Include navbar -->
-	<jsp:include page="navbar.jsp" />
-	<main>
-		<!-- Include sidebar -->
-		<jsp:include page="sidenav.jsp" />
+    <!-- Include navbar -->
+    <jsp:include page="navbar.jsp" />
+    <main>
+        <!-- Include sidebar -->
+        <jsp:include page="sidenav.jsp" />
 
-		<!-- Main content -->
-		<div class="main-body" style="width: -webkit-fill-available;">
-			<div class="maintitle">Event / Create Event</div>
-			<div class="main-container">
-				<!-- start of main content -->
-				<div class="box">
-					<div class="form-container">
-						<form id="createEventForm" method="post"
-							action="<c:url value='/createEvent'/>">
+        <!-- Main content -->
+        <div class="main-body" style="width: -webkit-fill-available;">
+            <div class="maintitle">Event / Create Event</div>
+            <div class="main-container">
+                <!-- Start of main content -->
+                <div class="box">
+                <c:if test="${not empty error_msg}">
+							<div class="error_msg"
+								style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px;">
+								${error_msg}</div>
+						</c:if>
+						<c:if test="${not empty success_msg}">
+							<div class="success_msg"
+								style="color: green; padding: 10px; border: 1px solid green; margin-bottom: 15px;">
+								${success_msg}</div>
+						</c:if>
+                    <div class="form-container">
+                        <form id="createEventForm" method="post" action="<c:url value='/saveEvent'/>">
+                            <!-- Event Details -->
+                            <div class="form-category">
+                                <h3>Event Details</h3>
+                                <div class="form-group">
+                                    <label for="name">Event Name</label>
+                                    <input type="text" id="name" name="name" placeholder="Enter event name" required>
+                                </div>
+                                <div class="inline-group">
+                                    <div class="form-group">
+                                        <label for="startDate">Start Date</label>
+                                        <input type="date" id="startDate" name="startDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endDate">End Date</label>
+                                        <input type="date" id="endDate" name="endDate" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="time">Event Time</label>
+                                    <input type="text" id="time" name="time" placeholder="e.g., 3:00 PM - 5:00 PM" required>
+                                </div>
+                                <div class="inline-group">
+                                    <div class="form-group">
+                                        <label for="organizer">Organizer</label>
+                                        <input type="text" id="organizer" name="organizer" placeholder="Enter organizer name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="speaker">Speaker</label>
+                                        <input type="text" id="speaker" name="speaker" placeholder="Enter speaker name">
+                                    </div>
+                                </div>
+                            </div>
 
-							<!-- Event Details -->
-							<div class="form-category">
-								<h3>Event Details</h3>
-								<div class="form-group">
-									<label for="eventName">Name of Event</label> <input type="text"
-										id="eventName" name="eventName" placeholder="Enter event name"
-										required>
-								</div>
-								<div class="inline-group">
-									<div class="form-group">
-										<label for="startDate">Start Date</label> <input type="date"
-											id="startDate" name="startDate" required>
-									</div>
-									<div class="form-group">
-										<label for="endDate">End Date</label> <input type="date"
-											id="endDate" name="endDate" required>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="eventTime">Time of Event</label> <input type="text"
-										id="eventTime" name="eventTime"
-										placeholder="e.g., 3:00pm - 5:00pm" required>
-								</div>
-								<div class="inline-group">
-									<div class="form-group">
-										<label for="organizer">Organizer</label> <input type="text"
-											id="organizer" name="organizer"
-											placeholder="Enter organizer name" required>
-									</div>
-									<div class="form-group">
-										<label for="speaker">Speaker</label> <input type="text"
-											id="speaker" name="speaker" placeholder="Enter speaker name"
-											required>
-									</div>
-								</div>
-							</div>
+                            <!-- Contact Information -->
+                            <div class="form-category">
+                                <h3>Contact Information</h3>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="Enter email address" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number">
+                                </div>
+                            </div>
 
-							<!-- Contact Information -->
-							<div class="form-category">
-								<h3>Contact Information</h3>
-								<div class="form-group">
-									<label for="email">Email</label> <input type="email" id="email"
-										name="email" placeholder="Enter email address" required>
-								</div>
-								<div class="form-group">
-									<label for="phoneNumber">Phone Number</label> <input type="tel"
-										id="phoneNumber" name="phoneNumber"
-										placeholder="Enter phone number" required>
-								</div>
-							</div>
+                            <!-- Participant Details -->
+                            <div class="form-category">
+                                <h3>Participant Details</h3>
+                                <div class="form-group">
+                                    <label>Participant Limit</label>
+                                    <div class="radio-group">
+                                        <label>
+                                            <input type="radio" name="participantType" value="LIMIT" required> Limit
+                                        </label>
+                                        <input type="number" id="participantLimit" name="participantLimit" placeholder="Enter limit" style="width:50%" disabled>
+                                        <label>
+                                            <input type="radio" name="participantType" value="OPEN" required> Open
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
-							<!-- Participant Details -->
-							<div class="form-category">
-								<h3>Participant Details</h3>
-								<div class="form-group">
-									<label>Number of Participants</label>
-									<div class="radio-group">
-										<div class="radio-input">
-											<input type="radio" id="limitParticipants"
-												name="participants" value="limit" required> <label
-												for="limitParticipants">Limit</label> <input type="number"
-												id="participantLimit" name="participantLimit"
-												placeholder="Enter limit" disabled>
-										</div>
-										<div class="radio-input">
-											<input type="radio" id="openParticipants" name="participants"
-												value="open" required> <label for="openParticipants">Open</label>
-										</div>
-									</div>
-								</div>
-							</div>
+                            <!-- Event Type -->
+                            <div class="form-category">
+                                <h3>Event Type</h3>
+                                <div class="form-group">
+                                    <div class="radio-group">
+                                        <label>
+                                            <input type="radio" name="eventType" value="PHYSICAL" required> Physical
+                                        </label>
+                                        <input type="text" id="eventLocation" name="eventLocation" placeholder="Enter location" disabled>
+                                        <label>
+                                            <input type="radio" name="eventType" value="VIRTUAL" required> Virtual
+                                        </label>
+                                        <input type="text" id="eventPlatform" name="eventPlatform" placeholder="Enter platform" disabled>
+                                    </div>
+                                </div>
+                            </div>
 
-							<!-- Event Type -->
-							<div class="form-category">
-								<h3>Event Type</h3>
-								<div class="form-group">
-									<div class="radio-group">
-										<div class="radio-input">
-											<input type="radio" id="physicalEvent" name="eventType"
-												value="physical" required> <label
-												for="physicalEvent">Physical</label> <input type="text"
-												id="eventLocation" name="eventLocation"
-												placeholder="Enter event location" disabled>
-										</div>
-										<div class="radio-input">
-											<input type="radio" id="virtualEvent" name="eventType"
-												value="virtual" required> <label for="virtualEvent">Virtual</label>
-											<input type="text" id="eventPlatform" name="eventPlatform"
-												placeholder="Enter event platform" disabled>
-										</div>
-									</div>
-								</div>
-							</div>
+                            <!-- Description -->
+                            <div class="form-category">
+                                <h3>Description</h3>
+                                <div class="form-group">
+                                    <textarea id="description" name="description" placeholder="Enter event description" required></textarea>
+                                </div>
+                            </div>
 
-							<!-- Description -->
-							<div class="form-category">
-								<h3>Description</h3>
-								<div class="form-group">
-									<textarea id="eventDescription" name="eventDescription"
-										placeholder="Enter event description" required></textarea>
-								</div>
-							</div>
+                            <!-- Form Buttons -->
+                            <div class="form-buttons">
+                                <button type="submit" class="btn btn-success">Save</button>
+                                <a href="Event" id="cancelbtn" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- End of main content -->
+            </div>
+        </div>
+    </main>
 
-							<!-- Form Buttons -->
-							<div class="form-buttons">
-								<button onclick="submit();" class="btn btn-success">Save</button>
-								<a href="Event" id="cancelbtn" class="btn btn-secondary">Cancel</a>
-							</div>
+    <script>
+        $(document).ready(function () {
+            // Enable or disable participant limit
+            $('input[name="participantType"]').change(function () {
+                if ($(this).val() === 'LIMIT') {
+                    $('#participantLimit').prop('disabled', false);
+                } else {
+                    $('#participantLimit').prop('disabled', true);
+                }
+            });
 
-						</form>
-					</div>
-				</div>
-				<!-- end of main content -->
-			</div>
-		</div>
-	</main>
-	<script>
-		document
-				.querySelector('#cancelbtn')
-				.addEventListener(
-						'click',
-						function(event) {
-							if (!confirm("Are you sure you want to cancel? Unsaved changes will be lost.")) {
-								event.preventDefault(); // Prevents navigation if user cancels
-							}
-						});
+            // Enable or disable location or platform
+            $('input[name="eventType"]').change(function () {
+                if ($(this).val() === 'PHYSICAL') {
+                    $('#eventLocation').prop('disabled', false);
+                    $('#eventPlatform').prop('disabled', true);
+                } else {
+                    $('#eventLocation').prop('disabled', true);
+                    $('#eventPlatform').prop('disabled', false);
+                }
+            });
 
-		$(document).ready(function() {
-			// Enable or disable participant limit
-			$('input[name="participants"]').change(function() {
-				if ($(this).val() === 'limit') {
-					$('#participantLimit').prop('disabled', false);
-				} else {
-					$('#participantLimit').prop('disabled', true);
-				}
-			});
-
-			// Enable or disable event location/platform
-			$('input[name="eventType"]').change(function() {
-				if ($(this).val() === 'physical') {
-					$('#eventLocation').prop('disabled', false);
-					$('#eventPlatform').prop('disabled', true);
-				} else {
-					$('#eventLocation').prop('disabled', true);
-					$('#eventPlatform').prop('disabled', false);
-				}
-			});
-
-		});
-
-		function submit() {
-			$('#createEventForm').submit();
-		}
-	</script>
+            // Cancel confirmation
+            $('#cancelbtn').click(function (event) {
+                if (!confirm("Are you sure you want to cancel? Unsaved changes will be lost.")) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
