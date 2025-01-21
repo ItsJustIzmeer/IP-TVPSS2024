@@ -39,7 +39,9 @@
 									<h3>Event Details</h3>
 									<div class="form-group">
 										<label for="name">Name of Event</label>
+										<label for="name">Name of Event</label>
 										<c:if test="${action}">
+											<input type="text" id="name" name="name"
 											<input type="text" id="name" name="name"
 												value="${event.name}" required>
 										</c:if>
@@ -55,11 +57,7 @@
 												<input type="date" id="startDate" name="startDate"
 													value="${startDate}" required>
 											</c:if>
-<<<<<<< HEAD
 												<c:if test="${not action}">
-=======
-											<c:if test="${not action}">
->>>>>>> ad15b14cf34dc35c0433cefe4a23f7690af901fb
 												<label>${startDate}</label>
 											</c:if>
 										</div>
@@ -69,11 +67,7 @@
 												<input type="date" id="endDate" name="endDate"
 													value="${endDate}" required>
 											</c:if>
-<<<<<<< HEAD
-												<c:if test="${not action}">
-=======
 											<c:if test="${not action}">
->>>>>>> ad15b14cf34dc35c0433cefe4a23f7690af901fb
 												<label>${endDate}</label>
 											</c:if>
 										</div>

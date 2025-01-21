@@ -5,16 +5,23 @@ com\config\JpaConfig.class
 com\controller\SchoolController.class
 com\dto\PagePermissionDTO.class
 com\entity\Event.class
+com\entity\Event.class
 com\controller\PagePermissionController.class
+com\controller\EquipmentController.class
+com\dao\EquipmentDAO.class
 com\controller\EquipmentController.class
 com\dao\EquipmentDAO.class
 com\controller\UserController.class
 com\entity\PagePermission.class
 com\config\WebConfig.class
-<<<<<<< HEAD
-=======
 com\entity\Equipment.class
->>>>>>> ad15b14cf34dc35c0433cefe4a23f7690af901fb
+com\entity\Page.class
+com\controller\EventController.class
+com\entity\School.class
+com\entity\Event$ParticipantType.class
+com\entity\PagePermission.class
+com\config\WebConfig.class
+com\entity\Equipment.class
 com\entity\Page.class
 com\controller\EventController.class
 com\entity\School.class
@@ -26,6 +33,8 @@ com\dao\PagePermissionDAO.class
 com\dto\UserPagePermissionDTO.class
 com\entity\User.class
 com\controller\HomeController.class
+com\entity\Event$EventType.class
+com\dao\EventDAO.class
 com\entity\Event$EventType.class
 com\dao\EventDAO.class
 com\Project2Application.class
