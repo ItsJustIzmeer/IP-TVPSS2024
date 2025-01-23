@@ -70,15 +70,15 @@ public class EquipmentController {
 			Equipment equipment = new Equipment();
 			equipment.setId(0);
 			equipment.setEquipmentID(Integer.parseInt(request.getParameter("equipmentID")));
-			equipment.setName(request.getParameter("name"));
-			equipment.setBrand(request.getParameter("brand"));
-			equipment.setAmount(Integer.parseInt(request.getParameter("amount")));
-
+			equipment.setName(request.getParameter("equipmentName"));
+			equipment.setBrand(request.getParameter("equipmentBrand"));
+			equipment.setAmount(Integer.parseInt(request.getParameter("equipmentAmount")));
+			
 			equipmentDAO.save(equipment);
 			model.addAttribute("success_msg", "Equipment has been successfully created.");
 			List<Equipment> equipments = equipmentDAO.findAll();
-			model.addAttribute("qeuipments", equipments);
-			view = "Equipments";
+			model.addAttribute("equipments", equipments);
+			view = "Equipment";
 
 		} catch (Exception e) {
 			e.printStackTrace(); // Add this for debugging
@@ -87,9 +87,9 @@ public class EquipmentController {
 		return new ModelAndView(view, model);
 	}
 
-	// Show the event details for editing
+	// Show the equipment details for editing
 	@GetMapping("/detailEquipment/{id}/{action}")
-	public ModelAndView eventDetails(@PathVariable int id, @PathVariable String action, ModelMap model,
+	public ModelAndView equipmentDetails(@PathVariable int id, @PathVariable String action, ModelMap model,
 			HttpServletRequest request) {
 		String view = "/detailEquipment";
 		model = auth(request, model, "Equipment");
@@ -111,17 +111,17 @@ public class EquipmentController {
 		return new ModelAndView(view, model);
 	}
 
-	// Handle event update
+	// Handle equipment update
 	@PostMapping("/editEquipment")
 	public ModelAndView editEquipment(ModelMap model, HttpServletRequest request) {
-		String view = "/detailEquipment";
+		String view = "Equipment";
 		model = auth(request, model, "Equipment");
 		model.addAttribute("error_msg", "");
 		model.addAttribute("success_msg", "");
 
 		Equipment equipment1 = new Equipment();
-		equipment1.setId(0);
-		equipment1.setEquipmentID(Integer.parseInt(request.getParameter("equipmentId")));
+		equipment1.setId(Integer.parseInt(request.getParameter("id")));
+		equipment1.setEquipmentID(Integer.parseInt(request.getParameter("equipmentID")));
 		equipment1.setName(request.getParameter("equipmentName"));
 		equipment1.setBrand(request.getParameter("equipmentBrand"));
 		equipment1.setAmount(Integer.parseInt(request.getParameter("equipmentAmount")));
@@ -133,13 +133,14 @@ public class EquipmentController {
 		return new ModelAndView(view, model);
 	}
 
-	/// Handle event deletion
+	/// Handle equipment deletion
 	@PostMapping("/deleteEquipment")
 	public ModelAndView deleteEquipment(@RequestParam int id, HttpServletRequest request, ModelMap model) {
-		String view = "/Equipment";
+		String view = "Equipment";
 		model = auth(request, model, "Equipment");
 		model.addAttribute("error_msg", "");
 		model.addAttribute("success_msg", "");
+		equipmentDAO.deleteById(id);
 
 		model.addAttribute("message", "Equipment deleted successfully.");
 		model.addAttribute("equipments", equipmentDAO.findAll());
@@ -149,9 +150,9 @@ public class EquipmentController {
 	
 	//azaf ni part kau -izmeer
 	@PostMapping("submitEquipmentApplication")
-	public ModelAndView submitEventApplication(@RequestParam String studentId, @RequestParam String studentName,
-			@RequestParam int eventId, @RequestParam String role, ModelMap model, HttpServletRequest request) {
-		String view = "/detailEquipment";
+	public ModelAndView submitEquipmentApplication(@RequestParam String studentId, @RequestParam String studentName,
+			@RequestParam int equipmentID, @RequestParam String role, ModelMap model, HttpServletRequest request) {
+		String view = "Equipment";
 		model = auth(request, model, "Equipment");
 		
 		model.addAttribute("message", "Your equipment application has been submitted!");
