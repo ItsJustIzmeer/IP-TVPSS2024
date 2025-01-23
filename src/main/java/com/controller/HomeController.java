@@ -502,17 +502,6 @@ public class HomeController {
 		return modelAndView;
 	}
 
-	@GetMapping("/EventApplication/{eventId}")
-	public ModelAndView eventApplication(@PathVariable String eventId, HttpServletRequest request) {
-		String view = "EventApplication";
-		ModelMap model = new ModelMap();
-		model = auth(request, model, view);
-
-		ModelAndView modelAndView = new ModelAndView(view, model);
-
-		return modelAndView;
-	}
-
 	@GetMapping("/ManageEquipment")
 	public ModelAndView manageEquipment(HttpServletRequest request) {
 		String view = "ManageEquipment";
@@ -566,16 +555,6 @@ public class HomeController {
 	@GetMapping("/ManageSchool")
 	public ModelAndView manageSchool(HttpServletRequest request) {
 		String view = "ManageSchool";
-		ModelMap model = new ModelMap();
-		model = auth(request, model, view);
-
-		ModelAndView modelAndView = new ModelAndView(view, model);
-		return modelAndView;
-	}
-
-	@GetMapping("/ManageEventApp")
-	public ModelAndView manageEventApp(HttpServletRequest request) {
-		String view = "ManageEventApp";
 		ModelMap model = new ModelMap();
 		model = auth(request, model, view);
 

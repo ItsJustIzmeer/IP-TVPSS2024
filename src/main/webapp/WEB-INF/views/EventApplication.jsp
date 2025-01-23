@@ -136,20 +136,20 @@ hr {
 
 							<div class="form-group">
 								<label for="studentName">Name:</label> <input type="text"
-									id="studentName" name="studentName" class="form-control" value="${currUser.username}"
+									id="studentName" name="studentName" class="form-control" value="${user.name}"
 									required />
-									<input type="hidden" name="studentId" value="${currUser.id }"/>
+									<input type="hidden" name="studentId" value="${user.id}"/>
 							</div>
 
 							<div class="form-group">
 								<label for="email">Email:</label> <input type="email" id="email"
-									name="email" class="form-control" value="${currUser.email}" required />
+									name="email" class="form-control" value="${user.email}" required />
 							</div>
 
 							<div class="form-group">
 								<label for="contactNumber">Contact Number:</label> <input
 									type="text" id="contactNumber" name="contactNumber"
-									class="form-control" value="${currUser.phoneNum}" required />
+									class="form-control" value="${user.phoneNumber}" required />
 							</div>
 
 							<div class="form-group">

@@ -200,29 +200,6 @@ public class EventController {
 	        return new ModelAndView(view, model);
 	    }
 	  
-	// Submit event application
-	    @PostMapping("/submitEventApplication")
-	    public ModelAndView submitEventApplication(@RequestParam String studentId, @RequestParam String studentName,
-	                                               @RequestParam int eventId, @RequestParam String role,
-	                                               ModelMap model, HttpServletRequest request) {
-	        String view = "Event";
-		    model = auth(request, model, "Event");
-
-	        Optional<Event> optionalEvent = eventDAO.findById(eventId);
-	        if (optionalEvent.isPresent()) {
-		        model.addAttribute("event", optionalEvent.get());
-		    } else {
-		        model.addAttribute("error_msg", "Event with ID " + eventId + " not found.");
-		        return new ModelAndView("Event", model);
-		    }
-	        //EventApp eventApp = new EventApp(studentId, studentName, event.getId(), event.getName(), role);
-	        //eventDAO.saveApplication(eventApp); // Ensure `saveApplication` method is implemented in DAO
-
-	        model.addAttribute("success_msg", "Your event application has been submitted!");
-	        model.addAttribute("events", eventDAO.findAll());
-
-	        return new ModelAndView(view, model);
-	    }
 	 
 	private ModelMap auth(HttpServletRequest request, ModelMap model, String view) {
 		HttpSession session = request.getSession(false);

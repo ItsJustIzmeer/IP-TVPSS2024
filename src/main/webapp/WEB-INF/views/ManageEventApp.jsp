@@ -1,16 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Manage Event Applications</title>
-    <link rel="stylesheet"
-        href="<c:url value='/resources/font-awesome-4.7.0/css/font-awesome.min.css'/>">
-    <link rel="stylesheet"
-        href="<c:url value='/resources/css/systemStyle.css'/>">
+<meta charset="UTF-8">
+<title>Manage Event Applications</title>
+<link rel="stylesheet"
+	href="<c:url value='/resources/font-awesome-4.7.0/css/font-awesome.min.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/systemStyle.css'/>">
 </head>
 <style>
 main {
@@ -117,58 +118,63 @@ hr {
 }
 </style>
 <body>
-    <!-- nav bar page -->
-    <jsp:include page="navbar.jsp" />
-    <main>
-        <!-- side menu page -->
-        <jsp:include page="sidenav.jsp" />
+	<!-- nav bar page -->
+	<jsp:include page="navbar.jsp" />
+	<main>
+		<!-- side menu page -->
+		<jsp:include page="sidenav.jsp" />
 
-        <!-- main body -->
-        <div class="main-body" style="width: -webkit-fill-available;">
-            <div class="maintitle">Manage Event Applications</div>
-            <div class="main-container">
-                <!-- start of main content -->
-                <div class="box">
-                    <h2>Event Applications</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Student Name</th>
-                                <th>Event Name</th>
-                                <th>Preferred Role</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="application" items="${applicationList}" varStatus="status">
-                                <tr>
-                                    <td>${status.index + 1}</td>
-                                    <td>${application.studentName}</td>
-                                    <td>${application.eventName}</td>
-                                    <td>${application.role}</td>
-                                    <td>${application.status}</td>
-                                    <td>
-                                        <form action="manageApplication" method="post" style="display:inline;">
-                                            <input type="hidden" name="applicationId" value="${application.id}" />
-                                            <input type="hidden" name="action" value="approve" />
-                                            <button type="submit" class="btn btn-success">Approve</button>
-                                        </form>
-                                        <form action="manageApplication" method="post" style="display:inline;">
-                                            <input type="hidden" name="applicationId" value="${application.id}" />
-                                            <input type="hidden" name="action" value="reject" />
-                                            <button type="submit" class="btn btn-danger">Reject</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- end of main content -->
-            </div>
-        </div>
-    </main>
+		<!-- main body -->
+		<div class="main-body" style="width: -webkit-fill-available;">
+			<div class="maintitle">Manage Event Applications</div>
+			<div class="main-container">
+				<!-- start of main content -->
+				<div class="box">
+					<h2>Event Applications</h2>
+					<table class="gridTable">
+						<thead>
+							<tr>
+								<th class="title">#</th>
+								<th class="title">Student Name</th>
+								<th class="title">Event Name</th>
+								<th class="title">Preferred Role</th>
+								<th class="title">Status</th>
+								<th class="title">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="application" items="${applicationList}"
+								varStatus="status">
+								<tr>
+									<td>${status.index + 1}</td>
+									<td>${application.studentName}</td>
+									<td>${application.eventName}</td>
+									<td>${application.role}</td>
+									<td>${application.status}</td>
+									<td><c:if test="${application.status == 'pending'}">
+											<form method="post"
+												action="<c:url value='/approveEventApplication'/>"
+												style="display: inline;">
+												<input type="hidden" name="applicationId"
+													value="${application.id}" />
+												<button type="submit" class="btn btn-success">Approve</button>
+											</form>
+											<form  method="post"
+												action="<c:url value='/rejectEventApplication'/>"
+												style="display: inline;">
+												<input type="hidden" name="applicationId"
+													value="${application.id}" />
+												<button type="submit" class="btn btn-danger">Reject</button>
+											</form>
+										</c:if></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<!-- end of main content -->
+			</div>
+		</div>
+	</main>
 </body>
 </html>
